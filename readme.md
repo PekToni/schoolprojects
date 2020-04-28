@@ -4,14 +4,14 @@
 
 # Messageboard,
 #### simple messageboard web-application.
-⋅⋅* angular
-⋅⋅* node.js
-⋅⋅* express
-⋅⋅* javascript
-⋅⋅* typescript
-⋅⋅* mongodb
+* angular
+* node.js
+* express
+* javascript
+* typescript
+* mongodb
 
 # Metroidvania,
 #### 2d metroid like shooting game
-⋅⋅* unity
-⋅⋅* c#
+* unity
+* c#
