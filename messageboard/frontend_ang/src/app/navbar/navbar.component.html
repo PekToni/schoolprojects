@@ -1,0 +1,7 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark justify-content-center">
+    <a class="nav-link" routerLink="/messages">Messages</a>
+    <a *ngIf="!login" class="nav-link" routerLink="/login">Log in</a>
+    <a *ngIf="login" class="nav-link" routerLink="/login" (click)="logout()">Log out</a>
+    <a class="nav-link" routerLink="/register">Register</a>
+    <a *ngIf="admin" class="nav-link" routerLink="/admin">Admin</a>
+</nav>

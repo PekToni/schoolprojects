@@ -1,0 +1,13 @@
+.custom-bg {
+    background-color: purple;
+}
+
+.message {
+    background-color: plum;
+}
+
+.container {
+    height: 100vh;
+    background: purple;
+    color: white;
+}

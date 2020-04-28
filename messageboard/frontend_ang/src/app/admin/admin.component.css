@@ -1,0 +1,14 @@
+.custom-bg {
+    background-color: purple;
+}
+
+.custom-table {
+    background-color: plum;
+    color: black;
+}
+
+.container {
+    height: 100vh;
+    background: purple;
+    color: white;
+}

@@ -1,0 +1,115 @@
+<div class="container" style="background-color: purple;">
+    <div class="rounded mx-1 my-2">
+        <h2 class="text-white">Messages</h2>
+        <a *ngIf="newMessage" routerLink="/newmessage">Add new message</a>
+        <a *ngIf="!newMessage" routerLink="/login">Please log in to leave message</a>
+        <h3 class="text-white">Topics</h3>
+    </div>
+    <!-- Pääviestien näyttö ja painikkeet -->
+    <div *ngFor="let message of messages">
+            <div class="row mx-1 my-2 border border-bottom-0 border-light">
+                <div class="col bg-dark text-left text-white">{{message.title}}</div>
+                <div class="col bg-dark text-right text-white">By: {{message.user}}</div>
+            </div>
+            <div class="row custom-bg mx-1">
+                <div class="col pt-2 border border-light border-bottom-0 message">{{message.message}}</div>
+            </div>
+            <div class="row custom-bg mx-1">
+                <!-- reply viestien näyttäminen ja piilottaminen, alla myös reply, modify ja delete painikkeet -->
+                <div class="col pb-2 pt-2 border-light border-bottom border-left message">
+                    <button class="btn btn-sm btn-dark" *ngIf="message.buttonVisible" (click)="showReplies(message)">Show replies</button>
+                </div>
+                <div class="col col pb-2 pt-2 border-light border-bottom border-right message">
+                    <button class="btn btn-sm btn-dark float-right rounded-pill mr-1" 
+                    *ngIf="!message.addReply && (auth.usermode === 'user' || auth.usermode === 'admin')" 
+                    (click)="addReply(message)">Reply</button>
+                    <button class="btn btn-sm btn-dark float-right rounded-pill mr-1" 
+                    *ngIf="auth.user === message.user && !message.edit" 
+                    (click)="messageEdit(message)">Modify</button>
+                    <button class="btn btn-sm btn-dark float-right rounded-pill mr-1" 
+                    *ngIf="auth.usermode === 'admin' && !message.edit" 
+                    (click)="deleteMessage(message)">Delete</button>
+                </div>
+            </div>
+        <!-- Viestien editointi formi, update- ja close-painikkeilla -->
+        <div *ngIf="message.edit">
+            <form #f="ngForm" (ngSubmit)="modifyMessage(f, message)">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input name="title" type="text" class="form-control" id="title" [(ngModel)]="message.title" ngModel>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <input name="message" type="text" class="form-control" id="message" [(ngModel)]="message.message" ngModel>
+                </div>
+                <div class="row m-2">
+                    <button class="btn btn-sm btn-dark float-right rounded-pill mr-1">Update</button>
+                    <button class="btn btn-sm btn-dark float-right rounded-pill mr-1" (click)="closeModifyMessage(message)">Close</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- reply viestien lisäämisen formi submit- ja hide-painikkeilla -->
+        <div *ngIf="message.addReply">
+            <form #f="ngForm" (ngSubmit)="replyMessage(f, message)">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input name="title" type="text" class="form-control" id="title" ngModel>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <input name="message" type="text" class="form-control" id="message" ngModel>
+                </div>
+                <div class="row m-2">
+                    <button class="btn btn-sm btn-dark float-right rounded-pill mr-1">Submit</button>
+                    <button class="btn btn-sm btn-dark float-right rounded-pill mr-1" (click)="addReply(message)">Hide</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- reply viestien näyttäminen, delete- ja modify-painikkeilla -->
+        <div *ngFor="let reply of message.reply">
+            <div *ngIf="message.repliesVisible && !reply.edit">
+                <div class="row custom-bg">
+                    <div class="col-2 custom-bg">
+                    </div>
+                    <div class="col-10">
+                        <div class="row mx-1 my-1 text-white bg-dark border border-bottom-0 rounded">
+                            <div class="col text-left">{{reply.title}}</div>
+                            <div class="col text-right">By: {{reply.user}}</div>
+                        </div>
+                        <div class="row py-2 mb-1 mx-1 border border-light rounded message">{{reply.message}}</div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <button class="btn btn-sm btn-dark float-right rounded-pill mr-1"
+                                 *ngIf="auth.usermode === 'admin'" (click)="deleteReply(message, reply)">Delete</button>
+                                <button class="btn btn-sm btn-dark float-right rounded-pill mr-1"
+                                 *ngIf="reply.user === auth.user && (auth.usermode === 'user' || auth.usermode === 'admin')"
+                                    (click)="updateReply(reply, message)">Modify</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- reply viestien muokkaaminen, update- ja close painikkeilla -->
+        <div *ngFor="let reply of message.reply">
+            <div *ngIf="reply.edit">
+                <form #f="ngForm" (ngSubmit)="modifyReply(f, message, reply)">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input name="title" type="text" class="form-control" id="title" [(ngModel)]="reply.title" ngModel>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <input name="message" type="text" class="form-control" id="message" [(ngModel)]="reply.message" ngModel>
+                    </div>
+                    <div class="row m-2">
+                        <button class="btn btn-sm btn-dark float-right rounded-pill mr-1">Update</button>
+                        <button class="btn btn-sm btn-dark float-right rounded-pill mr-1" (click)="closeModify(reply, message)">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

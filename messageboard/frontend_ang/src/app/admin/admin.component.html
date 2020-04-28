@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="custom-bg">
+        <h2>Users</h2>
+        <div class="row m-2">
+            <button class="btn btn-sm btn-dark mr-1" (click)="newUser()">Add new user</button>
+        </div>
+    </div>
+<!-- uuden käyttäjän lisääminen -->
+    <div *ngIf="newuser">
+        <form #f="ngForm" (ngSubmit)="addUser(f)" novalidate>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input name="username" type="text" class="form-control" id="username"
+                [(ngModel)]="users.username" #username="ngModel" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input name="email" type="email" class="form-control" id="email" 
+                pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [(ngModel)]="users.email" #email="ngModel" email="true" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control" id="password" #password="ngModel"
+                [(ngModel)]="users.password" minlength="6" required>
+            </div>
+            <div class="form-group">
+                <label class="checkbox" for="isuser">
+                    <input name="isuser" type="checkbox" id="isuser" [(ngModel)]="isuser" ngModel> User
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="checkbox" for="isadmin">
+                    <input name="isadmin" type="checkbox" id="isadmin" [(ngModel)]="isadmin" ngModel> Admin
+                </label>
+            </div>
+            <button class="btn btn-sm btn-dark mr-1" [disabled]="!f.valid">Add</button>
+            <button class="btn btn-sm btn-dark" (click)="newUser()">Close</button>
+            <div *ngIf="!username?.valid && (username?.dirty || username?.touched)">
+                <div *ngIf="username.errors.required">
+                    Username is required
+                </div>
+            </div>
+            <div *ngIf="!email?.valid && (email?.dirty || email?.touched)">
+                <div *ngIf="email.errors.required">
+                    Email is required
+                </div>
+                <div *ngIf="email.errors.pattern">
+                    Invalid Email Address
+                </div>
+            </div>
+            <div *ngIf="!password?.valid && (password?.dirty || password?.touched)">
+                <div *ngIf="password.errors.required">
+                    Password is required
+                </div>
+                <div *ngIf="password.errors.minlength">
+                    Password minimum lenght is {{password.errors.minlength?.requiredLength}}
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- käyttäjien näyttäminen -->
+    <table class="table">
+        <thead class="custom-bg text-white">
+            <th scope="col">Username</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">User</th>
+            <th scope="col">Admin</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </thead>
+        <tbody class="custom-table">
+            <tr *ngFor="let user of users">
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.isuser}}</td>
+                <td>{{user.isadmin}}</td>
+                <td><button class="btn btn-sm btn-dark float-right rounded-pill mr-1" (click)="edit(user)">Edit</button></td>
+                <td><button class="btn btn-sm btn-dark float-right rounded-pill mr-1" (click)="deleteUser(user)">Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- käyttäjän oikeuksien muokkaaminen -->
+    <div *ngFor="let user of users">
+        <div *ngIf="user.edit">
+            <form class="custom-table p-2" #f="ngForm" (ngSubmit)="modifyUser(f, user)">
+                <div class="form-group">
+                    <label for="username">Username: </label>
+                    <h3>{{user.username}}</h3>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail: </label>
+                    <h3>{{user.email}}</h3>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox" for="isuser">
+                        <input name="isuser" type="checkbox"id="isuser" [(ngModel)]="user.isuser" ngModel> User
+                    </label>
+                    
+                </div>
+                <div class="form-group">
+                    <label class="checkbox" for="isadmin">
+                        <input name="isadmin" type="checkbox" id="isadmin" [(ngModel)]="user.isadmin" ngModel> Admin
+                    </label>
+                 </div>
+                <button class="btn btn-sm btn-dark mr-1">Update</button>
+                <button class="btn btn-sm btn-dark" (click)="edit(user)">Close</button>
+            </form>
+        </div>
+    </div>
+</div>
