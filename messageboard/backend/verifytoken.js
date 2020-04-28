@@ -18,10 +18,7 @@ function verifyToken (req, res, next) {
                 return next(err);
             } else {
                 // testataaan onko admin tai user
-                console.log(token);
-                console.log(decoded);
                 if (decoded.isadmin || decoded.isuser) {
-                    console.log('verificated');
                     req.decoded = decoded;
                     next();
                 }

@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const config = require('../config');
 const User = require('../models/User');
 
 const UserController = {
@@ -30,7 +29,7 @@ const UserController = {
                 'isadmin': user.isadmin,
             };
             // luodaan token
-            const token = jwt.sign(payload, config.secret, {
+            const token = jwt.sign(payload, process.env.secret, {
                 expiresIn: 86400,
             });
             // lähetetään vastaus
@@ -78,7 +77,7 @@ const UserController = {
                 'isadmin': user.isadmin,
             };
                 // luodaan token
-            const token = jwt.sign(payload, config.secret, {
+            const token = jwt.sign(payload, process.env.secret, {
                 expiresIn: 86400,
             });
                 // lähetetään vastaus
@@ -96,7 +95,6 @@ const UserController = {
             console.log(users);
             res.send(users);
         }).catch((err) => {
-            console.log('kek');
             res.status(500).send({
                 message: err.message || 'Some error occurred while retrieving users',
             });
