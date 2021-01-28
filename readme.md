@@ -1,6 +1,11 @@
 # School projects
 
-#### Here are some school projects i've done while studying.
+#### Here are some school projects and assignments i've done while studying.
+
+# Bloglist frontend
+#### react frontend, one of fullstackopen-course assignments
+* React
+* React-redux
 
 # Messageboard,
 #### simple messageboard web-application.
@@ -12,6 +17,10 @@
 * mongodb
 
 # Metroidvania,
-#### 2d metroid like shooting game
+#### 2d metroidvania like shooting game
 * unity
 * c#
+
+# Recipebook,
+#### simple recipe database console program
+* C++
