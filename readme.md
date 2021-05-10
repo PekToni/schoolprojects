@@ -9,10 +9,10 @@
 
 # Event app for Helsinki events
 #### react frontend, firebase backend and database
-*React
-*Firebase
-*React material-ui
-*React material-table
+* React
+* Firebase
+* React material-ui
+* React material-table
 
 # Messageboard,
 #### simple messageboard web-application.
