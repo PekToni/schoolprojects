@@ -1,0 +1,134 @@
+<div class="container">
+    <div class="px-3 border bg-light">
+        <div>
+            <h5>Players today: {{ playersToday }}</h5>
+        </div>
+        <div>
+            <h4>Player statistics</h4>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link" [routerLink]="" (click)="showAllTime()">All time </a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="" (click)="showSeven()">Last 7 days </a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="" (click)="showThirty()">Last 30 days</a></li>
+        </ul>
+        <div *ngIf="allTime" class="chart-wrapper">
+            <canvas baseChart 
+                [datasets]="playerCount" 
+                [labels]="playDate" 
+                [options]="options"
+                [colors]="colors" 
+                [legend]="legend" 
+                [chartType]="playerstype" 
+                [plugins]="plugins">
+            </canvas>
+        </div>
+        <div *ngIf="seven" class="chart-wrapper">
+            <canvas baseChart 
+                [datasets]="playerCountSevenDays" 
+                [labels]="playDateSeven" 
+                [options]="options"
+                [colors]="colors" 
+                [legend]="legend" 
+                [chartType]="playerstype" 
+                [plugins]="plugins">
+            </canvas>
+        </div>
+        <div *ngIf="thirty" class="chart-wrapper">
+            <canvas baseChart 
+                [datasets]="playerCountThirtyDays" 
+                [labels]="playDateThirty" 
+                [options]="options"
+                [colors]="colors" 
+                [legend]="legend" 
+                [chartType]="playerstype" 
+                [plugins]="plugins">
+            </canvas>
+        </div>
+        <div class="pt-3" *ngFor="let stat of statistics">
+            <table class="table table-dark">
+                <thead>
+                    <tr><h4>Overall statistics</h4></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Total play sessions</td>
+                        <td class="text-right">{{ stat.sessions }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total players</td>
+                        <td class="text-right">{{ totalUniquePlayers }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total shot bullets</td>
+                        <td class="text-right">{{ stat.shotbullets }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total bullet hits on enemy</td>
+                        <td class="text-right">{{ stat.bullethits }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total melee hits</td>
+                        <td class="text-right">{{ stat.meleehits }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total melee hits on enemy</td>
+                        <td class="text-right">{{ stat.meleehitsonenemy }}</td>
+                    </tr>
+                    <tr><td><h5>Averages in game session</h5></td></tr>
+                    <tr>
+                        <td>Average game sessions by player</td>
+                        <td class="text-right">{{ averageGameSessionsByPlayer() }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average gametime</td>
+                        <td class="text-right">{{ time(averageGamingtime) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average amount of deaths</td>
+                        <td class="text-right">{{ stat.avgdeaths | number : '1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average amount of kills</td>
+                        <td class="text-right">{{ stat.avgkills | number : '1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average amount of damage taken</td>
+                        <td class="text-right">{{ stat.avgdamagetaken | number : '1.2-2' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average amount of damage on enemies</td>
+                        <td class="text-right">{{ stat.avgdamagedealth | number : '1.2-2' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row py-3">
+
+            <div class="col chart-wrapper">
+                <h5>Overall gunshot accuracy %</h5>
+                <canvas baseChart 
+                    [datasets]="gunshotAccuracyPie" 
+                    [labels]="gunshotAccuracy" 
+                    [options]="options"
+                    [colors]="piechartColors"
+                    [legend]="legend" 
+                    [chartType]="pietype" 
+                    [plugins]="plugins">
+                </canvas>
+            </div>
+
+            <div class="col chart-wrapper">
+                <h5>Overall melee accuracy %</h5>
+                <canvas baseChart 
+                    [datasets]="meleeAccuracyPie" 
+                    [labels]="meleeAccuracy" 
+                    [options]="options"
+                    [colors]="piechartColors"
+                    [legend]="legend" 
+                    [chartType]="pietype" 
+                    [plugins]="plugins">
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>

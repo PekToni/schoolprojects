@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="{{alertStyle}}">
+        {{alertMessage}}
+    </div>
+    <h1 *ngIf="showTemplate">Log in</h1>
+    <form *ngIf="showTemplate" class="form" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="form-group">
+            <label>Username</label>
+            <input class="form-control" type="text" formControlName="userid">
+            <div *ngIf="loginFormControl.userid.invalid && (loginFormControl.userid.dirty || loginFormControl.userid.touched)">
+                <div class="text-danger" *ngIf="loginFormControl.userid.errors.required">
+                    Username is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input class="form-control" type="password" formControlName="password">
+            <div *ngIf="loginFormControl.password.invalid && (loginFormControl.password.dirty || loginFormControl.password.touched)">
+                <div class="text-danger" *ngIf="loginFormControl.password.errors.required">
+                    Password is required.
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" [disabled]="!loginForm.valid">Log in</button>
+        </div>
+    </form>
+</div>

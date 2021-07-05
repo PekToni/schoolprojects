@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="{{alertStyle}}">
+        {{alertMessage}}
+    </div>
+    <div class="p-3 border bg-light">
+        <h5>Please add gamecode you have gotten from game</h5>
+        <form class="form" [formGroup]="gameidForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Game ID</label>
+                <input class="form-control" type="text" formControlName="gameid">
+                <div *ngIf="gameidFormControl.gameid.invalid && (gameidFormControl.gameid.dirty || gameidFormControl.gameid.touched)">
+                    <div class="text-danger" *ngIf="gameidFormControl.gameid.errors.required">
+                        Game ID is required.
+                    </div>
+                </div>
+            </div>
+            <div class="pb-3">
+                <button class="btn btn-dark" type="submit" [disabled]="!gameidForm.valid">Add game</button>
+            </div>
+        </form>
+    </div>
+</div>
+

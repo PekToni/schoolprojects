@@ -14,20 +14,24 @@
 * React material-ui
 * React material-table
 
-# Messageboard,
+# Messageboard
 #### simple messageboard web-application.
 * angular
+* bootstrap
 * node.js
 * express
-* javascript
-* typescript
 * mongodb
 
-# Metroidvania,
+# Metroidvania
 #### 2d metroidvania like shooting game
 * unity
 * c#
 
-# Recipebook,
+# Recipebook
 #### simple recipe database console program
 * C++
+
+# Statistics Frontend
+#### for game Virtual Shock
+* angular
+* bootstrap

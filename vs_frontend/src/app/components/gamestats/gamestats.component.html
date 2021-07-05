@@ -1,0 +1,96 @@
+<div class="container">
+    <div *ngIf="!showList" class="p-3 border bg-light">
+        <div>
+            <h4>Statistics for all the players</h4>
+        </div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th><h5>Game id</h5></th>
+                    <th class="text-right"><h5>Player name</h5></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let player of players">
+                    <td><a class="nav-link" [routerLink]="" (click)="getStatistics(player)">{{player.gameid}}</a></td>
+                    <td class="text-right">{{player.userid}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngFor="let player of players">
+        <div *ngIf="player.showList" class="p-3 border bg-light">
+            <div>
+                <h5>Sessionlist for player: {{player.userid}}</h5>
+            </div>
+            <table class="table table-dark" >
+                <tr *ngFor="let stat of statistics">
+                    <td>
+                        <a class="nav-link" [routerLink]="" (click)="showStats(player, stat)">{{stat.playdatetime | date: 'dd/MM/yyyy - HH:mm'}}
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-dark" *ngIf="player.showList" (click)="showStatList(player)">Close</button>
+        </div>
+    </div>
+    <div *ngFor="let player of players">
+        <div *ngFor="let stat of statistics">
+            <div *ngIf="player.showStatTable && stat.showStats" class="p-3 border bg-light">
+                <table *ngIf="stat.showStats && player.showStats" class="table table-dark">
+                    <tr>
+                        <td>Bullets shot</td>
+                        <td class="text-right">{{stat.shotbullets}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bullets hit on enemies</td>
+                        <td class="text-right">{{stat.bulletshitonenemy}}</td>
+                    </tr>
+                    <tr>
+                        <td>Melee hits</td>
+                        <td class="text-right">{{stat.meleehits}}</td>
+                    </tr>
+                    <tr>
+                        <td>Melee hits on enemies</td>
+                        <td class="text-right">{{stat.meleehitsonenemy}}</td>
+                    </tr>
+                    <tr>
+                        <td>Deaths</td>
+                        <td class="text-right">{{stat.deaths}}</td>
+                    </tr>
+                    <tr>
+                        <td>Kills</td>
+                        <td class="text-right">{{stat.kills}}</td>
+                    </tr>
+                    <tr>
+                        <td>Game session length</td>
+                        <td class="text-right">{{time(sessionTime)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Secrets found</td>
+                        <td class="text-right">{{stat.secretsfound}}</td>
+                    </tr>
+                    <tr>
+                        <td>Damage taken</td>
+                        <td class="text-right">{{stat.damagetaken}}</td>
+                    </tr>
+                    <tr>
+                        <td>Damage made on enemies</td>
+                        <td class="text-right">{{stat.damagedealth}}</td>
+                    </tr>
+                    <tr>
+                        <td>Distance travelled in game (meters)</td>
+                        <td class="text-right">{{stat.distancetravelled}}</td>
+                    </tr>
+                    <tr>
+                        <td>Times spotted by enemy</td>
+                        <td class="text-right">{{stat.timesgamerspottedbyenemy}}</td>
+                    </tr>
+                </table>
+                <div>
+                    <button *ngIf="stat.showStats" class="btn btn-dark" (click)="showStats(player, stat)">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

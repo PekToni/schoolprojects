@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="p-3 border bg-light">
+        <div class="{{alertStyle}}">
+            {{alertMessage}}
+        </div>
+        <form class="form" [formGroup]="userForm">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th><h5>Username</h5></th>
+                        <th class="text-right"><h5>Role</h5></th>
+                        <th class="text-right">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of webusers">
+                        <td>{{user.userid}}</td>
+                        <td class="text-right">
+                            <select formControlName="role" class="form-control">
+                                <option *ngFor="let r of role" [selected]="r === user.role">{{r}}</option>
+                            </select>
+                        </td>
+                        <td class="text-right"><button class="btn btn-light" (click)="editUserRole(user)">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="{{alertStyle}}">
+        {{alertMessage}}
+    </div>
+    <div class="p-3 border bg-light">
+        <h5>Here are your all time game statistics</h5>
+        <ul class="navbar-nav" *ngFor="let stat of statistics">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="" (click)="showStats(stat)">
+                    {{stat.playdatetime | date: 'dd/MM/yyyy'}}
+                </a>
+            </li>
+            <table *ngIf="stat.showStats" class="table table-dark">
+                <thead>
+                    <tr><h4>Statistics for {{stat.playdatetime | date: 'short'}}</h4></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bullets shot</td>
+                        <td class="text-right">{{stat.shotbullets}}</td>
+                    </tr>
+                    <tr>
+                        <td>Bullets hit on enemies</td>
+                        <td class="text-right">{{stat.bulletshitonenemy}}</td>
+                    </tr>
+                    <tr>
+                        <td>Melee hits</td>
+                        <td class="text-right">{{stat.meleehits}}</td>
+                    </tr>
+                    <tr>
+                        <td>Melee hits on enemies</td>
+                        <td class="text-right">{{stat.meleehitsonenemy}}</td>
+                    </tr>
+                    <tr>
+                        <td>Deaths</td>
+                        <td class="text-right">{{stat.deaths}}</td>
+                    </tr>
+                    <tr>
+                        <td>Kills</td>
+                        <td class="text-right">{{stat.kills}}</td>
+                    </tr>
+                    <tr>
+                        <td>Game session length</td>
+                        <td class="text-right">{{time(sessionTime)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Secrets found</td>
+                        <td class="text-right">{{stat.secretsfound}}</td>
+                    </tr>
+                    <tr>
+                        <td>Damage taken</td>
+                        <td class="text-right">{{stat.damagetaken}}</td>
+                    </tr>
+                    <tr>
+                        <td>Damage made on enemies</td>
+                        <td class="text-right">{{stat.damagedealth}}</td>
+                    </tr>
+                    <tr>
+                        <td>Distance travelled in game (meters)</td>
+                        <td class="text-right">{{stat.distancetravelled}}</td>
+                    </tr>
+                    <tr>
+                        <td>Times spotted by enemy</td>
+                        <td class="text-right">{{stat.timesgamerspottedbyenemy}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-dark" *ngIf="stat.showStats" (click)="showStats(stat)">Close</button>
+        </ul>
+    </div>
+</div>

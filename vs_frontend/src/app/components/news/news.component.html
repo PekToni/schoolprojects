@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="{{alertStyle}}">
+        {{alertMessage}}
+    </div>
+    <div *ngFor="let message of news" class="mx-lg-n5">
+        <div class="row mt-3">
+            <div class="col border bg-light"><h5>{{message.title}}</h5></div>
+        </div>
+        <div class="row">
+            <div class="col border bg-light">{{message.message}}</div>
+        </div>
+        <div class="row">
+            <div *ngIf="message.showYt" class="col border py-3 bg-light">
+                <youtube-player 
+                videoId="{{message.link}}"
+                suggestedQuality="highres"
+                [height]="300"
+                [width]="500">
+                </youtube-player>
+            </div>
+            <div *ngIf="message.showImg" class="col border py-3 bg-light">
+                <img [src]="message.image" class="img-fluid" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col border bg-light">
+                by: {{message.userid}}
+            </div>
+            <div class="col border bg-light">
+                {{message.date | date: 'dd/MM/yyyy'}}
+            </div>
+            <button *ngIf="roleIsAuthorized() && !message.editnews" class="btn btn-dark" (click)="editNews(message)">Edit</button>
+
+        </div>
+
+        <form class="form" *ngIf="message.editnews" [formGroup]="newsForm" (ngSubmit)="onSubmit(message)">
+            <h5>Edit news</h5>
+            <div class="form-group">
+                <label>Title</label>
+                <input class="form-control" type="text" formControlName="title">
+                <div *ngIf="newsFormControl.title.invalid && (newsFormControl.title.dirty || newsFormControl.title.touched)">
+                    <div class="text-danger" *ngIf="newsFormControl.title.errors.required">
+                        Title is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Message</label>
+                <input class="form-control" type="text" formControlName="message">
+                <div *ngIf="newsFormControl.message.invalid && (newsFormControl.message.dirty || newsFormControl.message.touched)">
+                    <div class="text-danger" *ngIf="newsFormControl.message.errors.required">
+                        Message is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Youtube link (short id)</label>
+                <input class="form-control" type="text" formControlName="link">
+            </div>
+
+            <div class="form-group">
+                <label>Image</label>
+                <input class="form-control" type="file"
+                (change)="onFileChanged($event)">
+            </div>
+            
+            <div>
+                <button class="btn btn-dark" type="submit" [disabled]="!newsForm.valid">Submit</button>
+                <button *ngIf="roleIsAuthorized() && message.editnews" class="btn btn-dark" (click)="closeEdit(message)">Close</button>
+            </div>
+        </form>
+    </div>
+</div>

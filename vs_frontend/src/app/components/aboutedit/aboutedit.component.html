@@ -1,0 +1,36 @@
+<div class="container">
+    <form class="form" [formGroup]="aboutForm">
+        <div class="{{alertStyle}}">
+            {{alertMessage}}
+        </div>
+        <div class="px-3 border bg-light">
+            <h1>Edit about page</h1>
+            <div class="form-group pb-3">
+                <label>Change Logo</label>
+                <input class="form-control" type="file"
+                (change)="onLogoChanged($event)">
+                <button type="button" class="btn btn-dark" (click)="changeLogo()" [disabled]="!aboutForm.controls['logo'].valid">Change</button>
+            </div>
+            
+
+            <div class="form-group pb-3">
+                <label>Edit game information</label>
+                <textarea class="form-control" formControlName="about"></textarea>
+                <button type="button" class="btn btn-dark" (click)="changeAbout()" [disabled]="!aboutForm.controls['about'].valid">Change</button>
+            </div>
+
+            <div class="form-group pb-3">
+                <label>Add Image</label>
+                <input class="form-control" type="file"
+                (change)="onImageChanged($event)">
+                <button type="button" class="btn btn-dark" (click)="addImage()" [disabled]="!aboutForm.controls['image'].valid">Add</button>
+            </div>
+
+            <div class="form-group">
+                <label>Add Trailer</label>
+                <input class="form-control" type="text" formControlName="trailer">
+                <button type="button" class="btn btn-dark" (click)="addTrailer()" [disabled]="!aboutForm.controls['trailer'].valid">Add</button>
+            </div>
+        </div>
+    </form>
+</div>

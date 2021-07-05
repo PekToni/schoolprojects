@@ -1,0 +1,26 @@
+<div class="container">
+    <form class="form" [formGroup]="contactinfoForm" (ngSubmit)="onSubmit()">
+        <div class="{{alertStyle}}">
+            {{alertMessage}}
+        </div>
+        <div class="p-3 border bg-light">
+            <h1>Edit teaminfo page</h1>
+            <div class="form-group">
+                <label>Team name</label>
+                <input class="form-control" type="text" formControlName="teamname">
+            </div>
+            <div class="form-group">
+                <label>Team E-mail</label>
+                <input class="form-control" type="text" formControlName="teamemail">
+                <div *ngIf="contactinfoFormControl.teamemail.invalid && (contactinfoFormControl.teamemail.dirty || contactinfoFormControl.teamemail.touched)">
+                    <div class="text-danger" *ngIf="contactinfoFormControl.teamemail.errors.pattern">
+                        Please enter correct e-mail.
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" [disabled]="!contactinfoForm.valid">Confirm</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,41 @@
+<!-- Uutisten lisäysformi -->
+<div class="container">
+    <h1>Add news</h1>
+    <form class="form" [formGroup]="newsForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label>Title</label>
+            <input class="form-control" type="text" formControlName="title">
+            <div *ngIf="newsFormControl.title.invalid && (newsFormControl.title.dirty || newsFormControl.title.touched)">
+                <div class="text-danger" *ngIf="newsFormControl.title.errors.required">
+                    Title is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Message</label>
+            <input class="form-control" type="text" formControlName="message">
+            <div *ngIf="newsFormControl.message.invalid && (newsFormControl.message.dirty || newsFormControl.message.touched)">
+                <div class="text-danger" *ngIf="newsFormControl.message.errors.required">
+                    Message is required.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Youtube link (short id)</label>
+            <input class="form-control" type="text" formControlName="link">
+        </div>
+
+        <div class="form-group">
+            <label>Image</label>
+            <input class="form-control" type="file"
+            (change)="onFileChanged($event)"> <!-- formControlName="image" -->
+        </div>
+        
+        <div>
+            <button type="submit" [disabled]="!newsForm.valid">Submit</button>
+        </div>
+    </form>
+</div>

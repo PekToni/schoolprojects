@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="{{alertStyle}}">
+        {{alertMessage}}
+    </div>
+    <div class="mb-3" *ngIf="!messageSended">
+        <div class="px-3 border bg-light">
+            <div class="row mt-3">
+                <div class="col">
+                    <h4>Contact Us</h4>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    {{teamname}}: {{teamemail}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <form *ngIf="!messageSended" class="form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <div class="p-3 border bg-light">
+            <h1>Take Contact</h1>
+            <div class="text-danger"><p>(* required field)</p></div>
+            <div class="form-group">
+                <label>Name (*)</label>
+                <input class="form-control" type="text" formControlName="name">
+                <div *ngIf="contactFormControl.name.invalid && (contactFormControl.name.dirty || contactFormControl.name.touched)">
+                    <div class="text-danger" *ngIf="contactFormControl.name.errors.required">
+                        Name is required.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>E-mail (*)</label>
+                <input class="form-control" type="text" formControlName="email">
+                <div *ngIf="contactFormControl.email.invalid && (contactFormControl.email.dirty || contactFormControl.email.touched)">
+                    <div class="text-danger" *ngIf="contactFormControl.email.errors.required">
+                        E-mail is required.
+                    </div>
+                    <div class="text-danger" *ngIf="contactFormControl.email.errors.pattern">
+                        Please enter correct e-mail.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Subject (*)</label>
+                <input class="form-control" type="text" formControlName="subject">
+                <div *ngIf="contactFormControl.subject.invalid && (contactFormControl.subject.dirty || contactFormControl.subject.touched)">
+                    <div class="text-danger" *ngIf="contactFormControl.subject.errors.required">
+                        Subject is required.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Message (*)</label>
+                <textarea class="form-control" type="text" formControlName="message" rows="5"></textarea>
+                <div *ngIf="contactFormControl.message.invalid && (contactFormControl.message.dirty || contactFormControl.message.touched)">
+                    <div class="text-danger" *ngIf="contactFormControl.message.errors.required">
+                        Message is required.
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" [disabled]="!contactForm.valid">Confirm</button>
+            </div>
+        </div>
+    </form>
+    <div class="mb-3" *ngIf="messageSended">
+        <div class="px-3 border bg-light">
+            <div class="row mt-3">
+                <div class="col">
+                    <h5>You sended message:</h5>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    Name: {{message.name}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    E-mail: {{message.email}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    Subject: {{message.subject}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    Message: {{message.message}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
